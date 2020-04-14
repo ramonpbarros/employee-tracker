@@ -299,8 +299,41 @@ function addEmployee() {
 }
 
 function removeEmployee() {
-  console.log("removeEmployee it works!");
-  startApp();
+  connection.query(
+    `SELECT first_name, last_name
+    FROM employees`,
+    (err, res) => {
+      if (err) {
+        throw err;
+      } else {
+        const employeeChoices = res.map((name) => ({
+          name: name.first_name + " " + name.last_name,
+        }));
+        console.table(employeeChoices);
+        inquirer
+          .prompt([
+            {
+              type: "list",
+              name: "employee",
+              choices: employeeChoices,
+            },
+          ])
+          .then((answers) => {
+            connection.query(
+              `DELETE FROM employees  WHERE first_name = ?;`,
+              answers.employee.split(" ", 1),
+              (err, res) => {
+                if (err) {
+                  throw err;
+                } else {
+                  startApp();
+                }
+              }
+            );
+          });
+      }
+    }
+  );
 }
 
 function updateEmployeeRole() {
