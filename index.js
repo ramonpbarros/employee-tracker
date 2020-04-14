@@ -51,10 +51,10 @@ function startApp() {
             name: "View all employee by manager",
             value: searchEmployeesManager,
           },
-          // {
-          //   name: "Add employee",
-          //   value: addEmployee,
-          // },
+          {
+            name: "Add employee",
+            value: addEmployee,
+          },
           {
             name: "Remove employee",
             value: removeEmployee,
@@ -189,41 +189,114 @@ function searchEmployeesManager() {
     });
 }
 
-// function addEmployee() {
-//   inquirer
-//     .prompt([
-//       {
-//         type: "input",
-//         name: "firstName",
-//         message: "What's the employee's first name?",
-//       },
-//       {
-//         type: "input",
-//         name: "lastName",
-//         message: "What's the employee's last name?",
-//       },
-//       {
-//         type: "list",
-//         name: "role",
-//         message: "What's the employee's role?",
-//         choices: ['Sales Lead', 'Sales Person', 'Lead Engineer', 'Software Engineer', 'Account Manager', 'Accountant', 'Legal Team Lead']
-//       },
-//       {
-//         type: "list",
-//         name: "manager",
-//         message: "Who is the employee's manager?",
-//         choices: ['None', 'John Doe', 'Mike Chan', 'Ashley Rodriguez', 'Kevin Tupik', 'Malia Brown', 'Sarah Lourd']
-//       },
-//      ])
-//      .then(answers => {
-//        connection.query(
-//          `INSERT INTO employees (first_name, last_name, role_id, manager_id)
-//           VALUES ()`
-//        )
-//      }
-//   // console.log("addEmployee it works!");
-//   // startApp();
-// }
+function addEmployee() {
+  inquirer
+    .prompt([
+      {
+        type: "input",
+        name: "firstName",
+        message: "What's the employee's first name?",
+      },
+      {
+        type: "input",
+        name: "lastName",
+        message: "What's the employee's last name?",
+      },
+      {
+        type: "list",
+        name: "role",
+        message: "What's the employee's role?",
+        choices: [
+          "Sales Lead",
+          "Sales Person",
+          "Lead Engineer",
+          "Software Engineer",
+          "Lawyer",
+          "Accountant",
+          "Legal Team Lead",
+        ],
+      },
+      {
+        type: "list",
+        name: "manager",
+        message: "Who is the employee's manager?",
+        choices: [
+          "null",
+          "John Doe",
+          "Mike Chan",
+          "Ashley Rodriguez",
+          "Kevin Tupik",
+          "Malia Brown",
+          "Sarah Lourd",
+        ],
+      },
+    ])
+    .then((answers) => {
+      let roleId;
+      switch (answers.role) {
+        case "Sales Lead":
+          roleId = 4;
+          break;
+        case "Sales Person":
+          roleId = 5;
+          break;
+        case "Lead Engineer":
+          roleId = 1;
+          break;
+        case "Software Engineer":
+          roleId = 6;
+          break;
+        case "Lawyer":
+          roleId = 5;
+          break;
+        case "Accountant":
+          roleId = 2;
+          break;
+        case "Legal Team Lead":
+          roleId = 3;
+          break;
+      }
+
+      let managerId;
+      switch (answers.manager) {
+        case "Ashley Rodriguez":
+          managerId = 1;
+          break;
+        case "Malia Brown":
+          managerId = 2;
+          break;
+        case "Sarah Lourd":
+          managerId = 3;
+          break;
+        case "John Doe":
+          managerId = 4;
+          break;
+        case "Mike Chan":
+          managerId = 5;
+          break;
+        case "Kevin Tupik":
+          managerId = 6;
+          break;
+        case "null":
+          managerId = null;
+          break;
+      }
+
+      connection.query(
+        `INSERT INTO employees (first_name, last_name, role_id, manager_id) 
+        VALUES (?,?,?,?)`,
+        [answers.firstName, answers.lastName, roleId, managerId],
+        (err, res) => {
+          if (err) {
+            throw err;
+          } else {
+            console.table(res);
+            startApp();
+          }
+        }
+      );
+    });
+}
 
 function removeEmployee() {
   console.log("removeEmployee it works!");
