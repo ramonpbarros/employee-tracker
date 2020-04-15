@@ -1,5 +1,7 @@
 # Employee Tracker
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/ramonpbarros/readme-generator)
+
 > Here goes your awesome project description!
 
 ## Table of contents
@@ -23,9 +25,9 @@ Add more general information about project. What the purpose of the project is? 
 
 ## Technologies
 
-- Tech 1 - version 1.0
-- Tech 2 - version 2.0
-- Tech 3 - version 3.0
+- JavaScript
+- Node.js
+- MySql
 
 ## Setup
 
@@ -38,7 +40,7 @@ Show examples of usage:
 
 ## Features
 
-List of features ready and TODOs for future development
+List of features:
 
 - Awesome feature 1
 - Awesome feature 2
@@ -51,7 +53,7 @@ To-do list:
 
 ## Status
 
-Project is: _in progress_, _finished_, _no longer continue_ and why?
+Project is: _in progress_
 
 ## Inspiration
 
