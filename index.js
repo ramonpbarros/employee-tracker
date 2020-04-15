@@ -221,7 +221,7 @@ function addEmployee() {
         name: "manager",
         message: "Who is the employee's manager?",
         choices: [
-          "null",
+          "None",
           "John Doe",
           "Mike Chan",
           "Ashley Rodriguez",
@@ -277,7 +277,7 @@ function addEmployee() {
         case "Kevin Tupik":
           managerId = 6;
           break;
-        case "null":
+        case "None":
           managerId = null;
           break;
       }
@@ -290,7 +290,7 @@ function addEmployee() {
           if (err) {
             throw err;
           } else {
-            console.log("Employee added successfully!");
+            console.log("* Employee added successfully!");
             startApp();
           }
         }
@@ -416,8 +416,81 @@ function updateEmployeeRole() {
 }
 
 function updateEmployeeManager() {
-  console.log("updateEmployeeManager it works!");
-  startApp();
+  connection.query(
+    `SELECT first_name, last_name
+    FROM employees`,
+    (err, res) => {
+      if (err) {
+        throw err;
+      } else {
+        const employeeChoices = res.map((name) => ({
+          name: name.first_name + " " + name.last_name,
+        }));
+        console.table(employeeChoices);
+        inquirer
+          .prompt([
+            {
+              type: "list",
+              name: "employee",
+              choices: employeeChoices,
+            },
+            {
+              type: "list",
+              name: "manager",
+              choices: [
+                "None",
+                "John Doe",
+                "Mike Chan",
+                "Ashley Rodriguez",
+                "Kevin Tupik",
+                "Malia Brown",
+                "Sarah Lourd",
+              ],
+            },
+          ])
+          .then((answers) => {
+            let managerId;
+            switch (answers.manager) {
+              case "Ashley Rodriguez":
+                managerId = 1;
+                break;
+              case "Malia Brown":
+                managerId = 2;
+                break;
+              case "Sarah Lourd":
+                managerId = 3;
+                break;
+              case "John Doe":
+                managerId = 4;
+                break;
+              case "Mike Chan":
+                managerId = 5;
+                break;
+              case "Kevin Tupik":
+                managerId = 6;
+                break;
+              case "None":
+                managerId = null;
+                break;
+            }
+            connection.query(
+              `UPDATE employees
+               SET  manager_id = ?
+               WHERE first_name = ?;`,
+              [managerId, answers.employee.split(" ", 1)],
+              (err, res) => {
+                if (err) {
+                  throw err;
+                } else {
+                  console.log("* Employee's manager updated successfully!");
+                  startApp();
+                }
+              }
+            );
+          });
+      }
+    }
+  );
 }
 
 function exit() {
