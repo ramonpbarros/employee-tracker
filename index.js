@@ -309,7 +309,6 @@ function removeEmployee() {
         const employeeChoices = res.map((name) => ({
           name: name.first_name + " " + name.last_name,
         }));
-        // console.table(employeeChoices);
         inquirer
           .prompt([
             {
@@ -319,18 +318,33 @@ function removeEmployee() {
             },
           ])
           .then((answers) => {
-            connection.query(
-              `DELETE FROM employees  WHERE first_name = ?;`,
-              answers.employee.split(" ", 1),
-              (err, res) => {
-                if (err) {
-                  throw err;
+            inquirer
+              .prompt([
+                {
+                  type: "list",
+                  message: `Are you sure you want to delete employee ${answers.employee}?`,
+                  name: "employeeChoice",
+                  choices: ["yes", "no"],
+                },
+              ])
+              .then((res) => {
+                if (res.employeeChoice === "yes") {
+                  connection.query(
+                    `DELETE FROM employees  WHERE first_name = ?;`,
+                    answers.employee.split(" ", 1),
+                    (err, res) => {
+                      if (err) {
+                        throw err;
+                      } else {
+                        console.log("* Employee deleted!");
+                        startApp();
+                      }
+                    }
+                  );
                 } else {
-                  console.log("* Employee deleted!");
                   startApp();
                 }
-              }
-            );
+              });
           });
       }
     }
@@ -496,3 +510,42 @@ function updateEmployeeManager() {
 function exit() {
   connection.end();
 }
+
+// function removeEmployee() {
+//   connection.query(
+//     `SELECT first_name, last_name
+//     FROM employees`,
+//     (err, res) => {
+//       if (err) {
+//         throw err;
+//       } else {
+//         const employeeChoices = res.map((name) => ({
+//           name: name.first_name + " " + name.last_name,
+//         }));
+//         // console.table(employeeChoices);
+//         inquirer
+//           .prompt([
+//             {
+//               type: "list",
+//               name: "employee",
+//               choices: employeeChoices,
+//             },
+//           ])
+//           .then((answers) => {
+//             connection.query(
+//               `DELETE FROM employees  WHERE first_name = ?;`,
+//               answers.employee.split(" ", 1),
+//               (err, res) => {
+//                 if (err) {
+//                   throw err;
+//                 } else {
+//                   console.log("* Employee deleted!");
+//                   startApp();
+//                 }
+//               }
+//             );
+//           });
+//       }
+//     }
+//   );
+// }
