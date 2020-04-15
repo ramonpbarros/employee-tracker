@@ -45,3 +45,5 @@ FOREIGN KEY
       (manager_id) REFERENCES role
       (id)
 );
+
+-- SET SQL_SAFE_UPDATES = 0;
