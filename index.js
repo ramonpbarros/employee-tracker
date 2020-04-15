@@ -290,7 +290,7 @@ function addEmployee() {
           if (err) {
             throw err;
           } else {
-            console.table(res);
+            console.log("Employee added successfully!");
             startApp();
           }
         }
@@ -309,7 +309,7 @@ function removeEmployee() {
         const employeeChoices = res.map((name) => ({
           name: name.first_name + " " + name.last_name,
         }));
-        console.table(employeeChoices);
+        // console.table(employeeChoices);
         inquirer
           .prompt([
             {
@@ -326,6 +326,7 @@ function removeEmployee() {
                 if (err) {
                   throw err;
                 } else {
+                  console.log("* Employee deleted!");
                   startApp();
                 }
               }
@@ -337,8 +338,81 @@ function removeEmployee() {
 }
 
 function updateEmployeeRole() {
-  console.log("updateEmployeeRole it works!");
-  startApp();
+  connection.query(
+    `SELECT first_name, last_name
+    FROM employees`,
+    (err, res) => {
+      if (err) {
+        throw err;
+      } else {
+        const employeeChoices = res.map((name) => ({
+          name: name.first_name + " " + name.last_name,
+        }));
+        console.table(employeeChoices);
+        inquirer
+          .prompt([
+            {
+              type: "list",
+              name: "employee",
+              choices: employeeChoices,
+            },
+            {
+              type: "list",
+              name: "role",
+              choices: [
+                "Sales Lead",
+                "Sales Person",
+                "Lead Engineer",
+                "Software Engineer",
+                "Lawyer",
+                "Accountant",
+                "Legal Team Lead",
+              ],
+            },
+          ])
+          .then((answers) => {
+            let roleId;
+            switch (answers.role) {
+              case "Sales Lead":
+                roleId = 4;
+                break;
+              case "Sales Person":
+                roleId = 5;
+                break;
+              case "Lead Engineer":
+                roleId = 1;
+                break;
+              case "Software Engineer":
+                roleId = 6;
+                break;
+              case "Lawyer":
+                roleId = 5;
+                break;
+              case "Accountant":
+                roleId = 2;
+                break;
+              case "Legal Team Lead":
+                roleId = 3;
+                break;
+            }
+            connection.query(
+              `UPDATE employees
+               SET  role_id = ?
+               WHERE first_name = ?;`,
+              [roleId, answers.employee.split(" ", 1)],
+              (err, res) => {
+                if (err) {
+                  throw err;
+                } else {
+                  console.log("* Employee's role updated successfully!");
+                  startApp();
+                }
+              }
+            );
+          });
+      }
+    }
+  );
 }
 
 function updateEmployeeManager() {
