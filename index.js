@@ -3,6 +3,8 @@ const inquirer = require("inquirer");
 const cTable = require("console.table");
 const figlet = require("figlet");
 
+const string = "_";
+
 const connection = mysql.createConnection({
   host: "localhost",
   port: 3306,
@@ -100,7 +102,9 @@ function searchAllEmployees() {
       if (err) {
         throw err;
       } else {
+        console.log(string.repeat(80));
         console.table(res);
+        console.log(string.repeat(80));
         startApp();
       }
     }
@@ -140,7 +144,9 @@ function searchEmployeesDepart() {
           if (err) {
             throw err;
           } else {
+            console.log(string.repeat(80));
             console.table(res);
+            console.log(string.repeat(80));
             startApp();
           }
         }
@@ -181,7 +187,9 @@ function searchEmployeesManager() {
           if (err) {
             throw err;
           } else {
+            console.log(string.repeat(80));
             console.table(res);
+            console.log(string.repeat(80));
             startApp();
           }
         }
