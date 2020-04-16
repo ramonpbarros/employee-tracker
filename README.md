@@ -37,29 +37,33 @@ Repository can be found here: [GitHub/ramonpbarros](https://github.com/ramonpbar
 
 ## Code Examples
 
-Show examples of usage:
-`put-your-code-here`
+`SELECT first_name, last_name FROM employees;`
 
 ## Features
 
 List of features:
 
-- Awesome feature 1
-- Awesome feature 2
-- Awesome feature 3
+- View departments, roles, employees.
+- Add employees.
+- Update employee roles.
+- Update employee managers.
+- Delete employees.
 
 To-do list:
 
-- Wow improvement to be done 1
-- Wow improvement to be done 2
+- View the total utilized budget of a department.
+- Add departments, roles.
+- Delete departments, roles.
 
 ## Status
 
 Project is: _in progress_
 
+- Check the application in the terminal. The application will be invoked with the following command: `node index.js`
+
 ## Inspiration
 
-Add here credits. Project inspired by..., based on...
+Project inspired by UCSD Coding Bootcamp, based on second month of course, applying node.js, MySql and JavaScript skills.
 
 ## Contact
 
