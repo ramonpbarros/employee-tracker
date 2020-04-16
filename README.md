@@ -21,7 +21,7 @@
 
 ## Screenshots
 
-![Example screenshot](./img/screenshot.png)
+![Example screenshot](./img/project.gif)
 
 ## Technologies
 
