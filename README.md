@@ -2,7 +2,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/ramonpbarros/readme-generator)
 
-> Here goes your awesome project description!
+> Command-line application that allows the user to manage department, roles, and employees.
 
 ## Table of contents
 
@@ -17,7 +17,7 @@
 
 ## General info
 
-Add more general information about project. What the purpose of the project is? Motivation?
+**C**ontent **M**anagement **S**ystems interface that make it easy for non-developers to view and interact with information stored in databases.
 
 ## Screenshots
 
@@ -31,7 +31,9 @@ Add more general information about project. What the purpose of the project is? 
 
 ## Setup
 
-Describe how to install / setup your local environement / add link to demo version.
+This application runs in the terminal. Make sure to npm install dependencies!
+
+Repository can be found here: [GitHub/ramonpbarros](https://github.com/ramonpbarros) Make sure to git clone and check out the code!
 
 ## Code Examples
 
